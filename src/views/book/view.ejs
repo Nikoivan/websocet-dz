@@ -52,8 +52,13 @@
             </main>
 
             <script>
-                const roomName = location.pathname.at(-1);
-                const socket = io.connect("/", {query: `roomName=${roomName}`});
+                const roomName = location.pathname.split('/').pop()
+
+                console.log({ roomName })
+
+                const socket = io({query: {
+                        roomName
+                    }});
 
                 const boxlist = document.getElementById("list");
                 const username = document.getElementById("username");

@@ -13,7 +13,12 @@ const PORT = process.env.PORT || 8080;
 
 const app = buildApp();
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:8080',
+    methods: ['GET', 'POST'],
+  },
+});
 
 io.on('connection', socket => {
   console.log(`Client connected: ${socket.id}`);
@@ -32,6 +37,11 @@ io.on('connection', socket => {
   });
 
   const { roomName } = socket.handshake.query;
+
+  if (!roomName) {
+    socket.emit('error', { message: 'Room name is required' });
+    return;
+  }
 
   console.log(`Received room: ${roomName}`);
 
