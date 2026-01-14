@@ -1,4 +1,4 @@
-export type Book = {
+export interface Book {
   id: string;
   title: string;
   description: string;
@@ -7,7 +7,7 @@ export type Book = {
   fileCover: string;
   fileName: string;
   path: string;
-};
+}
 
 export class BookEntity {
   books: Book[] = [
